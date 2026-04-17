@@ -1,81 +1,73 @@
-# Hotel Management System
+# React + TypeScript + Vite
 
-Frontend: HTML, CSS, JavaScript  
-Backend: Python Flask (`main.py`)  
-Database: MySQL (use XAMPP / phpMyAdmin)
+This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
-## Important
-- XAMPP is used here for **MySQL + phpMyAdmin**
-- Python backend runs separately using Flask
-- Start **Apache + MySQL** in XAMPP
-- Then run `python main.py`
+Currently, two official plugins are available:
 
-## Setup steps
+- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
+- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
 
-### 1) Install packages
-```bash
-pip install -r requirements.txt
+## React Compiler
+
+The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+
+## Expanding the ESLint configuration
+
+If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+
+```js
+export default defineConfig([
+  globalIgnores(['dist']),
+  {
+    files: ['**/*.{ts,tsx}'],
+    extends: [
+      // Other configs...
+
+      // Remove tseslint.configs.recommended and replace with this
+      tseslint.configs.recommendedTypeChecked,
+      // Alternatively, use this for stricter rules
+      tseslint.configs.strictTypeChecked,
+      // Optionally, add this for stylistic rules
+      tseslint.configs.stylisticTypeChecked,
+
+      // Other configs...
+    ],
+    languageOptions: {
+      parserOptions: {
+        project: ['./tsconfig.node.json', './tsconfig.app.json'],
+        tsconfigRootDir: import.meta.dirname,
+      },
+      // other options...
+    },
+  },
+])
 ```
 
-### 2) Start XAMPP
-Start:
-- Apache
-- MySQL
+You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
 
-### 3) Create database
-Open:
-```text
-http://localhost/phpmyadmin
+```js
+// eslint.config.js
+import reactX from 'eslint-plugin-react-x'
+import reactDom from 'eslint-plugin-react-dom'
+
+export default defineConfig([
+  globalIgnores(['dist']),
+  {
+    files: ['**/*.{ts,tsx}'],
+    extends: [
+      // Other configs...
+      // Enable lint rules for React
+      reactX.configs['recommended-typescript'],
+      // Enable lint rules for React DOM
+      reactDom.configs.recommended,
+    ],
+    languageOptions: {
+      parserOptions: {
+        project: ['./tsconfig.node.json', './tsconfig.app.json'],
+        tsconfigRootDir: import.meta.dirname,
+      },
+      // other options...
+    },
+  },
+])
 ```
-
-Create a database named:
-```text
-hotel_management
-```
-
-Then import:
-```text
-hotel_management.sql
-```
-
-### 4) Update DB credentials if needed
-Open `main.py` and check:
-```python
-DB_CONFIG = {
-    "host": "localhost",
-    "user": "root",
-    "password": "",
-    "database": "hotel_management"
-}
-```
-
-### 5) Run the project
-```bash
-python main.py
-```
-
-### 6) Open in browser
-```text
-http://127.0.0.1:5000
-```
-
-## Default admin login
-- Username: `admin`
-- Password: `admin123`
-
-## Main features
-- User registration and login
-- Password hashing
-- View hotel rooms
-- Book a room
-- My bookings page
-- Contact form
-- Admin login
-- Admin dashboard
-- Add room
-- Delete room
-- View all bookings
-- Approve or reject bookings
-
-## Important note
-This is a good working college project. It is not production-level software.
